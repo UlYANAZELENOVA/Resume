@@ -1,0 +1,617 @@
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>НЕИЗВЕСТНЫЙ ЧЕЛОВЕК — Финансовый аналитик</title>
+<style>
+  /* ---------- БАЗОВЫЕ ПЕРЕМЕННЫЕ ---------- */
+  :root{
+    --bg:#0b1020;
+    --bg-soft:#111830;
+    --card:#151d38;
+    --card-2:#1a2444;
+    --text:#e8ecf8;
+    --muted:#9aa6c7;
+    --accent:#5b8cff;
+    --accent-2:#22d3ee;
+    --accent-3:#a855f7;
+    --line:rgba(255,255,255,.08);
+    --shadow:0 20px 45px rgba(0,0,0,.45);
+    --radius:20px;
+    --radius-sm:14px;
+    --max:1080px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  html{scroll-behavior:smooth}
+
+  body{
+    font-family:"Inter","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(91,140,255,.25), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(168,85,247,.22), transparent 55%),
+      radial-gradient(800px 600px at 50% 120%, rgba(34,211,238,.18), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    line-height:1.65;
+    min-height:100vh;
+    padding:clamp(16px,4vw,48px) clamp(12px,3vw,32px);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:var(--max);margin:0 auto}
+
+  /* ---------- ЗАГОЛОВОК ---------- */
+  .hero{
+    position:relative;
+    padding:clamp(24px,5vw,56px);
+    border-radius:calc(var(--radius) + 8px);
+    background:linear-gradient(135deg, rgba(91,140,255,.14), rgba(168,85,247,.12) 45%, rgba(34,211,238,.12));
+    border:1px solid var(--line);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;inset:-40% -20% auto auto;
+    width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle at center, rgba(91,140,255,.55), transparent 65%);
+    filter:blur(40px);
+    z-index:-1;
+    animation:float 9s ease-in-out infinite alternate;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;inset:auto auto -45% -15%;
+    width:460px;height:460px;border-radius:50%;
+    background:radial-gradient(circle at center, rgba(34,211,238,.45), transparent 65%);
+    filter:blur(50px);
+    z-index:-1;
+    animation:float 11s ease-in-out infinite alternate-reverse;
+  }
+  @keyframes float{
+    from{transform:translate3d(0,0,0)}
+    to{transform:translate3d(-30px,25px,0)}
+  }
+
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 14px;
+    border-radius:999px;
+    font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:#cfe0ff;
+    background:rgba(91,140,255,.14);
+    border:1px solid rgba(91,140,255,.35);
+    backdrop-filter:blur(6px);
+  }
+  .badge .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 0 12px var(--accent-2);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%,100%{transform:scale(1);opacity:1}
+    50%{transform:scale(1.35);opacity:.7}
+  }
+
+  h1{
+    margin-top:18px;
+    font-size:clamp(1.9rem,5.2vw,3.4rem);
+    line-height:1.1;
+    font-weight:800;
+    letter-spacing:-.02em;
+    background:linear-gradient(100deg,#ffffff 0%,#9fc0ff 35%,#7ff0ff 55%,#c99bff 80%,#ffffff 100%);
+    background-size:220% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    color:transparent;
+    animation:shine 7s linear infinite;
+  }
+  @keyframes shine{
+    to{background-position:220% center}
+  }
+
+  .role{
+    margin-top:10px;
+    font-size:clamp(1rem,2.4vw,1.25rem);
+    color:var(--muted);
+    font-weight:500;
+  }
+  .role strong{
+    color:#fff;
+    font-weight:700;
+  }
+
+  .contact{
+    display:flex;flex-wrap:wrap;gap:10px;
+    margin-top:24px;
+  }
+  .chip{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:10px 15px;
+    border-radius:12px;
+    font-size:.9rem;
+    color:#dfe7ff;
+    background:rgba(255,255,255,.045);
+    border:1px solid var(--line);
+    transition:.28s ease;
+    text-decoration:none;
+  }
+  .chip:hover{
+    transform:translateY(-3px);
+    border-color:rgba(91,140,255,.55);
+    background:rgba(91,140,255,.12);
+    box-shadow:0 12px 28px rgba(91,140,255,.22);
+  }
+  .chip svg{width:17px;height:17px;flex:none;opacity:.9}
+
+  /* ---------- СЕКЦИИ ---------- */
+  section{
+    margin-top:34px;
+    padding:clamp(20px,4vw,38px);
+    border-radius:var(--radius);
+    background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
+    border:1px solid var(--line);
+    box-shadow:0 14px 36px rgba(0,0,0,.28);
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1);
+  }
+  section.visible{opacity:1;transform:none}
+
+  h2{
+    display:flex;align-items:center;gap:12px;
+    font-size:clamp(1.15rem,2.6vw,1.5rem);
+    font-weight:750;
+    letter-spacing:-.01em;
+    margin-bottom:18px;
+  }
+  h2::before{
+    content:"";
+    width:6px;height:26px;border-radius:6px;
+    background:linear-gradient(180deg,var(--accent),var(--accent-3));
+    box-shadow:0 0 18px rgba(91,140,255,.65);
+  }
+
+  h3{
+    font-size:1.02rem;
+    font-weight:700;
+    color:#fff;
+    margin-bottom:8px;
+  }
+
+  p{color:#cdd6ee}
+
+  .muted{color:var(--muted)}
+
+  /* ---------- ОПЫТ РАБОТЫ ---------- */
+  .job-head{
+    display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
+    align-items:flex-start;
+    padding-bottom:16px;
+    border-bottom:1px dashed var(--line);
+    margin-bottom:18px;
+  }
+  .job-title{font-size:1.15rem;font-weight:750;color:#fff}
+  .job-company{
+    margin-top:4px;
+    color:var(--muted);
+    font-size:.95rem;
+  }
+  .date-pill{
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:.82rem;font-weight:650;
+    color:#cfe0ff;
+    background:rgba(34,211,238,.12);
+    border:1px solid rgba(34,211,238,.35);
+    white-space:nowrap;
+  }
+
+  .subhead{
+    font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent-2);
+    margin:18px 0 10px;
+  }
+
+  ul.list{list-style:none;display:grid;gap:9px}
+  ul.list li{
+    position:relative;
+    padding-left:26px;
+    color:#c6d0ea;
+    font-size:.96rem;
+  }
+  ul.list li::before{
+    content:"";
+    position:absolute;left:6px;top:.62em;
+    width:8px;height:8px;border-radius:3px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 0 10px rgba(91,140,255,.6);
+  }
+
+  /* ---------- КЕЙСЫ / ДОСТИЖЕНИЯ ---------- */
+  .cases{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .case{
+    position:relative;
+    padding:18px 18px 18px 20px;
+    border-radius:var(--radius-sm);
+    background:linear-gradient(150deg, rgba(91,140,255,.16), rgba(168,85,247,.08));
+    border:1px solid rgba(91,140,255,.3);
+    overflow:hidden;
+    transition:.3s ease;
+  }
+  .case::before{
+    content:"";
+    position:absolute;left:0;top:0;bottom:0;width:4px;
+    background:linear-gradient(180deg,var(--accent),var(--accent-3));
+  }
+  .case:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(91,140,255,.22)}
+  .case .big{
+    display:block;
+    font-size:1.5rem;font-weight:800;
+    background:linear-gradient(100deg,#7ff0ff,#9fc0ff,#c99bff);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent;
+    margin-bottom:6px;
+  }
+  .case p{font-size:.92rem;color:#d3dbf2}
+
+  /* ---------- КАРТОЧКИ НАВЫКОВ ---------- */
+  .grid-skills{
+    display:grid;gap:16px;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  }
+  .skill-card{
+    position:relative;
+    padding:22px;
+    border-radius:var(--radius-sm);
+    background:var(--card);
+    border:1px solid var(--line);
+    overflow:hidden;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease;
+  }
+  .skill-card::after{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(135deg, rgba(91,140,255,.16), rgba(168,85,247,.1), rgba(34,211,238,.12));
+    opacity:0;transition:opacity .35s ease;
+    pointer-events:none;
+  }
+  .skill-card:hover{
+    transform:translateY(-8px) scale(1.012);
+    border-color:rgba(91,140,255,.5);
+    box-shadow:0 24px 48px rgba(91,140,255,.24);
+  }
+  .skill-card:hover::after{opacity:1}
+  .skill-card > *{position:relative;z-index:1}
+
+  .skill-icon{
+    width:44px;height:44px;border-radius:12px;
+    display:grid;place-items:center;
+    margin-bottom:14px;
+    background:linear-gradient(135deg, rgba(91,140,255,.28), rgba(168,85,247,.24));
+    border:1px solid rgba(91,140,255,.4);
+    color:#bcd2ff;
+    font-size:1.25rem;
+  }
+  .skill-card h3{margin-bottom:12px}
+  .skill-card ul{list-style:none;display:grid;gap:8px}
+  .skill-card ul li{
+    position:relative;padding-left:18px;
+    font-size:.9rem;color:#c6d0ea;
+  }
+  .skill-card ul li::before{
+    content:"";
+    position:absolute;left:2px;top:.6em;
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent-2);
+    box-shadow:0 0 8px var(--accent-2);
+  }
+
+  /* ---------- ТЕГИ ИНСТРУМЕНТОВ ---------- */
+  .tags{display:flex;flex-wrap:wrap;gap:10px}
+  .tag{
+    padding:9px 15px;
+    border-radius:999px;
+    font-size:.85rem;font-weight:550;
+    color:#dbe4ff;
+    background:rgba(255,255,255,.05);
+    border:1px solid var(--line);
+    transition:.25s ease;
+    cursor:default;
+  }
+  .tag:hover{
+    color:#fff;
+    transform:translateY(-3px);
+    background:linear-gradient(135deg, rgba(91,140,255,.28), rgba(168,85,247,.22));
+    border-color:rgba(91,140,255,.6);
+    box-shadow:0 10px 22px rgba(91,140,255,.25);
+  }
+  .tag.primary{
+    background:linear-gradient(135deg, rgba(34,211,238,.2), rgba(91,140,255,.2));
+    border-color:rgba(34,211,238,.45);
+    color:#e6f7ff;
+  }
+
+  /* ---------- ОБРАЗОВАНИЕ / ДОП ---------- */
+  .edu-item{
+    padding:16px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .edu-item:last-child{border-bottom:none;padding-bottom:0}
+  .edu-item .title{font-weight:700;color:#fff}
+  .edu-item .meta{font-size:.9rem;color:var(--muted);margin-top:4px}
+
+  /* ---------- ЯЗЫКИ ---------- */
+  .langs{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .lang{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;padding:14px 16px;
+    border-radius:12px;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--line);
+  }
+  .lang .name{font-weight:650;color:#fff}
+  .lang .lvl{
+    font-size:.8rem;font-weight:650;
+    padding:5px 11px;border-radius:999px;
+    color:#cfe0ff;
+    background:rgba(91,140,255,.16);
+    border:1px solid rgba(91,140,255,.35);
+  }
+
+  /* ---------- ПОДВАЛ ---------- */
+  footer{
+    margin:40px 0 10px;
+    text-align:center;
+    font-size:.82rem;
+    color:var(--muted);
+  }
+
+  /* ---------- АДАПТИВ ---------- */
+  @media (max-width:640px){
+    .hero{padding:24px 20px}
+    section{padding:20px 18px;margin-top:22px}
+    .job-head{flex-direction:column}
+    .date-pill{align-self:flex-start}
+    .contact{gap:8px}
+    .chip{font-size:.85rem;padding:9px 12px}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+    section{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <span class="badge"><span class="dot"></span> Открыт к удалённой работе</span>
+
+    <h1 id="typewriter">Иванов Алексей Петрович</h1>
+
+    <p class="role">
+      <strong>Финансовый аналитик</strong> · удалённый формат · Москва
+    </p>
+
+    <div class="contact">
+      <a class="chip" href="tel:+7XXXXXXXXXX">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +7 (XXX) XXX‑XX‑XX
+      </a>
+      <a class="chip" href="mailto:email@example.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 6 9 7 9-7"/></svg>
+        email@example.com
+      </a>
+      <span class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 1 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        Москва · полностью удалённо
+      </span>
+    </div>
+  </header>
+
+  <!-- ================= ЦЕЛЬ ================= -->
+  <section>
+    <h2>Цель</h2>
+    <p>
+      Занять позицию финансового аналитика с фокусом на аналитику данных, прогнозирование
+      и поддержку управленческих решений. Ориентирован на результативность, точность расчётов
+      и применение современных инструментов (в т. ч. нейросетей и автоматизации) для ускорения
+      и повышения качества аналитики.
+    </p>
+  </section>
+
+  <!-- ================= ОПЫТ ================= -->
+  <section>
+    <h2>Опыт работы</h2>
+
+    <div class="job-head">
+      <div>
+        <div class="job-title">Финансовый аналитик</div>
+        <div class="job-company">ООО «Вымышленная компания» · Москва · удалённый формат</div>
+      </div>
+      <span class="date-pill">2023 – 2026 · 3 года</span>
+    </div>
+
+    <p class="muted">Удалённый формат работы с еженедельными синхронизациями в онлайн‑формате.</p>
+
+    <div class="subhead">Ключевые обязанности</div>
+    <ul class="list">
+      <li>Подготовка ежемесячной и квартальной управленческой отчётности (P&amp;L, Cash Flow, Balance Sheet).</li>
+      <li>Построение финансовых моделей и прогнозов (DCF, сценарный анализ, sensitivity analysis).</li>
+      <li>Анализ отклонений фактических показателей от плана (план‑факт анализ), выявление причин и формирование рекомендаций.</li>
+      <li>Формирование бюджетов подразделений и контроль исполнения.</li>
+      <li>Автоматизация рутинных отчётов в Excel (сводные таблицы, Power Query, макросы), внедрение шаблонов для сокращения времени подготовки отчётности.</li>
+      <li>Взаимодействие с бухгалтерией и операционными подразделениями для сбора и верификации данных.</li>
+      <li>Подготовка аналитических записок и презентаций для руководства (структура, выводы, рекомендации).</li>
+    </ul>
+
+    <div class="subhead">Достижения</div>
+    <div class="cases">
+      <div class="case">
+        <span class="big">3 → 1 день</span>
+        <p>Сократил время подготовки ежемесячного P&amp;L за счёт автоматизации шаблонов и внедрения Power Query.</p>
+      </div>
+      <div class="case">
+        <span class="big">92–95%</span>
+        <p>Повысил точность прогнозов по выручке за счёт дополнительных факторов сезонности и корректировки модели.</p>
+      </div>
+      <div class="case">
+        <span class="big">KPI‑дашборд</span>
+        <p>Разработал дашборд в Excel для контроля KPI подразделений, который используется всеми руководителями направлений.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= НАВЫКИ ================= -->
+  <section>
+    <h2>Ключевые навыки</h2>
+
+    <div class="grid-skills">
+
+      <div class="skill-card">
+        <div class="skill-icon">📊</div>
+        <h3>Финансовая аналитика и моделирование</h3>
+        <ul>
+          <li>Финансовое моделирование (DCF, IRR, NPV, сценарные расчёты)</li>
+          <li>План‑факт анализ и выявление драйверов отклонений</li>
+          <li>Бюджетирование и управленческая отчётность (P&amp;L, Cash Flow)</li>
+          <li>Оценка эффективности проектов и инвестиционных инициатив</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">⚙️</div>
+        <h3>Инструменты и технологии</h3>
+        <ul>
+          <li>Продвинутый Excel: сводные таблицы, Power Query, формулы, условное форматирование, базовые макросы</li>
+          <li>Power BI / Tableau (базовые дашборды и визуализация данных)</li>
+          <li>SQL (базовый уровень: выгрузка и фильтрация данных)</li>
+          <li>Нейросети и ИИ‑инструменты: запросы, проверка гипотез, генерация черновиков отчётов, обработка массивов данных, интерпретация результатов</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">🤝</div>
+        <h3>Мягкие навыки</h3>
+        <ul>
+          <li>Структурированная подача результатов: выводы + рекомендации + обоснование</li>
+          <li>Умение объяснять сложные финансовые данные простым языком для нефинансовых руководителей</li>
+          <li>Внимательность к деталям, проверка источников данных и перекрёстная сверка показателей</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="subhead" style="margin-top:26px">Инструменты</div>
+    <div class="tags">
+      <span class="tag primary">Excel</span>
+      <span class="tag primary">Power Query</span>
+      <span class="tag">Power BI</span>
+      <span class="tag">Tableau</span>
+      <span class="tag">SQL</span>
+      <span class="tag">DCF</span>
+      <span class="tag">IRR / NPV</span>
+      <span class="tag">Сценарный анализ</span>
+      <span class="tag">P&amp;L</span>
+      <span class="tag">Cash Flow</span>
+      <span class="tag">Бюджетирование</span>
+      <span class="tag">ИИ‑инструменты</span>
+    </div>
+  </section>
+
+  <!-- ================= ОБРАЗОВАНИЕ ================= -->
+  <section>
+    <h2>Образование</h2>
+    <div class="edu-item">
+      <div class="title">Московский государственный университет им. М. В. Ломоносова</div>
+      <div class="meta">Экономический факультет, бакалавр экономики · 2019–2023</div>
+      <div class="meta">Профиль: «Финансы и кредит»</div>
+    </div>
+  </section>
+
+  <!-- ================= ДОП. ОБУЧЕНИЕ ================= -->
+  <section>
+    <h2>Дополнительное обучение и сертификаты</h2>
+    <ul class="list">
+      <li>Курс «Финансовое моделирование и оценка проектов» (онлайн‑школа, 2024).</li>
+      <li>Сертификат по Power BI для бизнес‑аналитики (2025).</li>
+      <li>Интенсив по работе с данными и автоматизации в Excel (2025).</li>
+    </ul>
+  </section>
+
+  <!-- ================= ЯЗЫКИ ================= -->
+  <section>
+    <h2>Владение языками</h2>
+    <div class="langs">
+      <div class="lang">
+        <span class="name">Русский</span>
+        <span class="lvl">Родной</span>
+      </div>
+      <div class="lang">
+        <span class="name">Английский</span>
+        <span class="lvl">B2</span>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:12px;font-size:.9rem">
+      Английский: чтение финансовой документации, ведение переписки.
+    </p>
+  </section>
+
+  <!-- ================= О СЕБЕ ================= -->
+  <section>
+    <h2>О себе</h2>
+    <p>
+      Ориентирован на результат и точность: каждый вывод подкрепляю данными и проверяю на логику.
+      Умею расставлять приоритеты и работать в условиях дедлайнов. Активно использую современные
+      инструменты (в том числе ИИ) для ускорения рутинных задач, но всегда контролирую качество
+      и достоверность результатов. Готов к полностью удалённому формату работы и оперативному
+      взаимодействию в цифровых средах.
+    </p>
+  </section>
+
+  <footer>© НЕИЗВЕСТНЫЙ ЧЕЛОВЕК · Финансовый аналитик</footer>
+</div>
+
+<script>
+  /* Плавное появление секций при скролле */
+  const sections = document.querySelectorAll('section');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  sections.forEach((s, i) => {
+    s.style.transitionDelay = (i * 40) + 'ms';
+    io.observe(s);
+  });
+
+  /* Эффект печатающегося заголовка */
+  const el = document.getElementById('typewriter');
+  const fullText = el.textContent.trim();
+  el.textContent = '';
+  let idx = 0;
+  const speed = 42;
+
+  function type() {
+    if (idx <= fullText.length) {
+      el.textContent = fullText.slice(0, idx);
+      idx++;
+      setTimeout(type, speed);
+    }
+  }
+  window.addEventListener('load', () => setTimeout(type, 300));
+</script>
+</body>
+</html>
